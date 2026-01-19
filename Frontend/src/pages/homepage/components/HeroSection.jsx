@@ -114,48 +114,29 @@ const HeroSection = () => {
       )}
       <button
         onClick={handlePrevSlide}
-        className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center group"
+        className="absolute left-2 md:left-8 top-1/2 -translate-y-1/2 z-30 w-8 h-8 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center group"
         aria-label="Previous slide">
 
-        <Icon name="ChevronLeft" size={24} color="#FFFFFF" />
+        <Icon name="ChevronLeft" size={16} md:size={24} color="#FFFFFF" />
       </button>
       <button
         onClick={handleNextSlide}
-        className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 z-30 w-12 h-12 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center group"
+        className="absolute right-2 md:right-8 top-1/2 -translate-y-1/2 z-30 w-8 h-8 md:w-14 md:h-14 rounded-full bg-white/20 backdrop-blur-sm hover:bg-white/30 transition-all duration-300 flex items-center justify-center group"
         aria-label="Next slide">
 
-        <Icon name="ChevronRight" size={24} color="#FFFFFF" />
+        <Icon name="ChevronRight" size={16} md:size={24} color="#FFFFFF" />
       </button>
-      <div className="absolute bottom-8 md:bottom-12 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-3">
+      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2">
         {heroSlides?.map((_, index) =>
         <button
           key={index}
           onClick={() => handleSlideChange(index)}
           className={`transition-all duration-300 rounded-full ${
           index === currentSlide ?
-          'w-12 h-3 bg-white' : 'w-3 h-3 bg-white/50 hover:bg-white/70'}`
+          'w-2 h-2 bg-white scale-125' : 'w-1.5 h-1.5 bg-white/40 hover:bg-white/60 hover:scale-110'}` 
           }
-          aria-label={`Go to slide ${index + 1}`} />
+          aria-label={`Go to slide ${index + 1}`} />)}
 
-        )}
-      </div>
-      <div className="absolute bottom-8 md:bottom-12 right-4 md:right-8 z-30 flex flex-col space-y-3">
-        <a
-          href="https://wa.me/918421539554"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="w-14 h-14 rounded-full bg-[#25D366] hover:bg-[#20BA5A] transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl"
-          aria-label="Contact us on WhatsApp">
-
-          <Icon name="MessageCircle" size={24} color="#FFFFFF" />
-        </a>
-        <a
-          href="tel:+918421539554"
-          className="w-14 h-14 rounded-full cultural-gradient hover:opacity-90 transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl"
-          aria-label="Call us now">
-
-          <Icon name="Phone" size={24} color="#FFFFFF" />
-        </a>
       </div>
     </section>);
 

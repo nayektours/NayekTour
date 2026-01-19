@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Routes as RouterRoutes, Route } from "react-router-dom";
 import ScrollToTop from "./components/ScrollToTop";
 import ErrorBoundary from "./components/ErrorBoundary";
+import FloatingActionButtons from "./components/FloatingActionButtons";
 import NotFound from "./pages/NotFound";
 import JourneyPlanner from './pages/journey-planner';
 import PackageDetails from './pages/package-details';
@@ -26,6 +27,7 @@ const Routes = () => {
         <Route path="/homepage" element={<Homepage />} />
         <Route path="*" element={<NotFound />} />
       </RouterRoutes>
+      <FloatingActionButtons />
       </ErrorBoundary>
     </BrowserRouter>
   );
