@@ -1,0 +1,351 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Text:wght@400;600&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Primary Colors - Trust foundation */
+    --color-primary: #1E40AF; /* blue-800 */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary Colors - Cultural warmth */
+    --color-secondary: #F59E0B; /* amber-500 */
+    --color-secondary-foreground: #1F2937; /* gray-800 */
+    
+    /* Accent Colors - Adventure connection */
+    --color-accent: #059669; /* emerald-600 */
+    --color-accent-foreground: #FFFFFF; /* white */
+    
+    /* Background & Surface */
+    --color-background: #FEFEFE; /* gray-50 */
+    --color-foreground: #1F2937; /* gray-800 */
+    --color-card: #FFFFFF; /* white */
+    --color-card-foreground: #1F2937; /* gray-800 */
+    --color-popover: #FFFFFF; /* white */
+    --color-popover-foreground: #1F2937; /* gray-800 */
+    
+    /* Muted Colors */
+    --color-muted: #F8FAFC; /* slate-50 */
+    --color-muted-foreground: #6B7280; /* gray-500 */
+    
+    /* Border & Input */
+    --color-border: #E5E7EB; /* gray-200 */
+    --color-input: #E5E7EB; /* gray-200 */
+    --color-ring: #1E40AF; /* blue-800 */
+    
+    /* Status Colors */
+    --color-success: #10B981; /* emerald-500 */
+    --color-success-foreground: #FFFFFF; /* white */
+    --color-warning: #F59E0B; /* amber-500 */
+    --color-warning-foreground: #1F2937; /* gray-800 */
+    --color-error: #EF4444; /* red-500 */
+    --color-error-foreground: #FFFFFF; /* white */
+    --color-destructive: #EF4444; /* red-500 */
+    --color-destructive-foreground: #FFFFFF; /* white */
+    
+    /* Additional Brand Colors */
+    --color-trust: #6366F1; /* indigo-500 */
+    --color-trust-foreground: #FFFFFF; /* white */
+    --color-cultural-red: #DC2626; /* red-600 */
+    --color-cultural-red-foreground: #FFFFFF; /* white */
+    
+    /* Typography Scale */
+    --font-headline: 'Playfair Display', serif;
+    --font-body: 'Source Sans Pro', sans-serif;
+    --font-cta: 'Poppins', sans-serif;
+    --font-accent: 'Crimson Text', serif;
+    
+    /* Spacing Scale */
+    --spacing-base: 8px;
+    --spacing-section: 48px;
+    
+    /* Shadow System */
+    --shadow-soft: 0 4px 20px rgba(245, 158, 11, 0.1);
+    --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    
+    /* Border Radius */
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    /* Primary Colors - Maintained trust */
+    --color-primary: #3B82F6; /* blue-500 */
+    --color-primary-foreground: #FFFFFF; /* white */
+    
+    /* Secondary Colors - Warm contrast */
+    --color-secondary: #F59E0B; /* amber-500 */
+    --color-secondary-foreground: #0A0A0A; /* gray-950 */
+    
+    /* Accent Colors - Nature emphasis */
+    --color-accent: #10B981; /* emerald-500 */
+    --color-accent-foreground: #FFFFFF; /* white */
+    
+    /* Background & Surface */
+    --color-background: #0A0A0A; /* gray-950 */
+    --color-foreground: #F9FAFB; /* gray-50 */
+    --color-card: #1F2937; /* gray-800 */
+    --color-card-foreground: #F9FAFB; /* gray-50 */
+    --color-popover: #1F2937; /* gray-800 */
+    --color-popover-foreground: #F9FAFB; /* gray-50 */
+    
+    /* Muted Colors */
+    --color-muted: #374151; /* gray-700 */
+    --color-muted-foreground: #9CA3AF; /* gray-400 */
+    
+    /* Border & Input */
+    --color-border: #374151; /* gray-700 */
+    --color-input: #374151; /* gray-700 */
+    --color-ring: #3B82F6; /* blue-500 */
+    
+    /* Status Colors */
+    --color-success: #10B981; /* emerald-500 */
+    --color-success-foreground: #FFFFFF; /* white */
+    --color-warning: #F59E0B; /* amber-500 */
+    --color-warning-foreground: #0A0A0A; /* gray-950 */
+    --color-error: #EF4444; /* red-500 */
+    --color-error-foreground: #FFFFFF; /* white */
+    --color-destructive: #EF4444; /* red-500 */
+    --color-destructive-foreground: #FFFFFF; /* white */
+    
+    /* Additional Brand Colors */
+    --color-trust: #818CF8; /* indigo-400 */
+    --color-trust-foreground: #FFFFFF; /* white */
+    --color-cultural-red: #F87171; /* red-400 */
+    --color-cultural-red-foreground: #FFFFFF; /* white */
+  }
+
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-body);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-headline);
+  }
+}
+
+@layer components {
+  /* Header Styles */
+  .header {
+    @apply fixed top-0 left-0 right-0 z-50 bg-card shadow-md transition-all duration-300;
+  }
+
+  .header-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .header-content {
+    @apply flex items-center justify-between h-16 lg:h-20;
+  }
+
+  .header-logo {
+    @apply flex items-center space-x-3 flex-shrink-0;
+  }
+
+  .header-logo-icon {
+    @apply w-10 h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center transition-transform duration-300 hover:scale-105;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  }
+
+  .header-logo-text {
+    @apply text-xl lg:text-2xl font-bold text-foreground;
+    font-family: var(--font-headline);
+  }
+
+  .header-nav {
+    @apply hidden lg:flex items-center space-x-1;
+  }
+
+  .header-nav-link {
+    @apply px-4 py-2 text-sm font-medium text-foreground hover:text-primary transition-colors duration-200 rounded-md hover:bg-muted;
+    font-family: var(--font-body);
+  }
+
+  .header-nav-link.active {
+    @apply text-primary bg-muted;
+  }
+
+  .header-actions {
+    @apply flex items-center space-x-3;
+  }
+
+  .header-mobile-toggle {
+    @apply lg:hidden p-2 rounded-md text-foreground hover:bg-muted transition-colors duration-200;
+  }
+
+  /* Mobile Menu */
+  .mobile-menu {
+    @apply fixed inset-0 z-40 lg:hidden;
+  }
+
+  .mobile-menu-overlay {
+    @apply fixed inset-0 bg-background;
+  }
+
+  .mobile-menu-content {
+    @apply fixed inset-y-0 right-0 w-full max-w-sm bg-card shadow-xl transform transition-transform duration-300 ease-in-out;
+  }
+
+  .mobile-menu-header {
+    @apply flex items-center justify-between p-4 border-b border-border;
+  }
+
+  .mobile-menu-nav {
+    @apply px-4 py-6 space-y-1;
+  }
+
+  .mobile-menu-link {
+    @apply block px-4 py-3 text-base font-medium text-foreground hover:text-primary hover:bg-muted rounded-md transition-colors duration-200;
+    font-family: var(--font-body);
+  }
+
+  .mobile-menu-link.active {
+    @apply text-primary bg-muted;
+  }
+
+  /* Footer Styles */
+  .footer {
+    @apply bg-card border-t border-border mt-auto;
+  }
+
+  .footer-container {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12;
+  }
+
+  .footer-grid {
+    @apply grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8;
+  }
+
+  .footer-section-title {
+    @apply text-lg font-semibold text-foreground mb-4;
+    font-family: var(--font-headline);
+  }
+
+  .footer-link {
+    @apply block text-muted-foreground hover:text-primary transition-colors duration-200 mb-2;
+    font-family: var(--font-body);
+  }
+
+  .footer-description {
+    @apply text-muted-foreground mb-4 leading-relaxed;
+    font-family: var(--font-body);
+  }
+
+  .footer-social {
+    @apply flex space-x-4 mt-4;
+  }
+
+  .footer-social-link {
+    @apply w-10 h-10 rounded-full bg-muted flex items-center justify-center text-foreground hover:bg-primary hover:text-primary-foreground transition-all duration-200;
+  }
+
+  .footer-bottom {
+    @apply border-t border-border pt-8 flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0;
+  }
+
+  .footer-copyright {
+    @apply text-sm text-muted-foreground;
+    font-family: var(--font-body);
+  }
+
+  .footer-trust-badges {
+    @apply flex items-center space-x-6;
+  }
+
+  .footer-trust-badge {
+    @apply flex items-center space-x-2 text-sm text-muted-foreground;
+  }
+
+  /* Animation Utilities */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  .animate-fade-in {
+    animation: fadeIn 0.3s ease-out;
+  }
+
+  @keyframes slideInRight {
+    from {
+      transform: translateX(100%);
+    }
+    to {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-slide-in-right {
+    animation: slideInRight 0.3s ease-out;
+  }
+
+  /* Cultural Pattern Utilities */
+  .cultural-gradient {
+    background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  }
+
+  .cultural-shadow {
+    box-shadow: var(--shadow-soft);
+  }
+
+  /* Scroll Behavior */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Focus Styles */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+}
+
+@layer utilities {
+  /* Custom Spacing */
+  .section-spacing {
+    padding-top: var(--spacing-section);
+    padding-bottom: var(--spacing-section);
+  }
+
+  /* Text Utilities */
+  .text-headline {
+    font-family: var(--font-headline);
+  }
+
+  .text-body {
+    font-family: var(--font-body);
+  }
+
+  .text-cta {
+    font-family: var(--font-cta);
+  }
+
+  .text-accent {
+    font-family: var(--font-accent);
+  }
+
+  /* Container Utilities */
+  .container-padding {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Main Content Offset */
+  .main-content {
+    @apply pt-16 lg:pt-20;
+  }
+}
