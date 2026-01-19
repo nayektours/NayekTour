@@ -44,8 +44,8 @@ const JourneyPlanner = () => {
     rating: 4.8,
     highlights: [
     "Visit iconic Taj Mahal and Agra Fort",
-    "Explore Delhi\'s historical monuments",
-    "Experience Jaipur\'s royal palaces"]
+    "Explore Delhi's historical monuments",
+    "Experience Jaipur's royal palaces"]
 
   },
   {
@@ -155,20 +155,17 @@ const JourneyPlanner = () => {
   };
 
   const handleDateSelect = (date) => {
-    if (!startDate || startDate && endDate) {
-      setStartDate(date);
-      setEndDate(null);
-    } else if (startDate && !endDate) {
-      if (date > startDate) {
-        setEndDate(date);
-        setCurrentStep(2);
-        setTimeout(() => {
-          document.getElementById('details-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 100);
-      } else {
-        setStartDate(date);
-        setEndDate(null);
-      }
+    setStartDate(date);
+    // Calculate end date based on package duration
+    if (selectedPackage) {
+      const duration = parseInt(selectedPackage?.duration?.match(/\d+/)?.[0] || 7);
+      const endDate = new Date(date);
+      endDate.setDate(endDate.getDate() + duration - 1);
+      setEndDate(endDate);
+      setCurrentStep(2);
+      setTimeout(() => {
+        document.getElementById('details-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 100);
     }
   };
 
@@ -276,7 +273,6 @@ const JourneyPlanner = () => {
                     packageData={pkg}
                     isSelected={selectedPackage?.id === pkg?.id}
                     onSelect={() => handlePackageSelect(pkg)} />
-
                   )}
                 </div>
               </section>
@@ -291,29 +287,30 @@ const JourneyPlanner = () => {
                       <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline">
                         Step 2: Choose Your Dates
                       </h2>
-                      <p className="text-sm md:text-base text-muted-foreground">Select start and end dates for your journey</p>
+                      <p className="text-sm md:text-base text-muted-foreground">Select your start date</p>
                     </div>
                   </div>
 
                   <DateSelectionCalendar
                   selectedStartDate={startDate}
-                  selectedEndDate={endDate}
+                  selectedEndDate={null}
                   onDateSelect={handleDateSelect}
-                  blockedDates={blockedDates} />
+                  blockedDates={blockedDates}
+                  singleDateSelection={true} />
 
-
-                  {startDate && !endDate &&
+                  {startDate &&
                 <div className="mt-4 p-4 bg-primary/10 rounded-lg flex items-start space-x-3">
                       <Icon name="Info" size={20} color="var(--color-primary)" className="flex-shrink-0 mt-0.5" />
-                      <p className="text-sm text-foreground">
-                        Start date selected: <strong>{startDate?.toLocaleDateString('en-GB')}</strong>. Now select your end date.
-                      </p>
+                      <div className="text-sm text-foreground">
+                        <p>Start date: <strong>{startDate?.toLocaleDateString('en-GB')}</strong></p>
+                        {endDate && <p>End date: <strong>{endDate?.toLocaleDateString('en-GB')}</strong> (calculated based on package duration)</p>}
+                      </div>
                     </div>
                 }
                 </section>
               }
 
-              {selectedPackage && startDate && endDate &&
+              {selectedPackage && startDate &&
               <section id="details-section">
                   <div className="flex items-center space-x-3 mb-6">
                     <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
