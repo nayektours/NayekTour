@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import Icon from './AppIcon';
 import Button from './ui/Button';
 
@@ -7,6 +7,7 @@ const Header = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const navigationItems = [
     { path: '/homepage', label: 'Home' },
@@ -79,7 +80,7 @@ const Header = () => {
                 iconName="Send"
                 iconPosition="right"
                 className="hidden lg:inline-flex"
-                onClick={() => window.location.href = '/enquiry-form'}
+                onClick={() => navigate('/enquiry-form')}
               >
                 Enquire Now
               </Button>
@@ -149,7 +150,7 @@ const Header = () => {
                 fullWidth
                 onClick={() => {
                   handleMobileMenuClose();
-                  window.location.href = '/enquiry-form';
+                  navigate('/enquiry-form');
                 }}
               >
                 Start Planning Your Journey
