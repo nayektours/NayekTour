@@ -148,10 +148,6 @@ const JourneyPlanner = () => {
 
   const handlePackageSelect = (pkg) => {
     setSelectedPackage(pkg);
-    setCurrentStep(1);
-    setTimeout(() => {
-      document.getElementById('date-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }, 100);
   };
 
   const handleDateSelect = (date) => {
@@ -162,27 +158,12 @@ const JourneyPlanner = () => {
       const endDate = new Date(date);
       endDate.setDate(endDate.getDate() + duration - 1);
       setEndDate(endDate);
-      setCurrentStep(2);
-      setTimeout(() => {
-        document.getElementById('details-section')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }, 100);
     }
   };
 
   const handleFormChange = (field, value) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
     setErrors((prev) => ({ ...prev, [field]: '' }));
-
-    if (field === 'groupSize' || field === 'accommodation' || field === 'mealPlan') {
-      const allFieldsFilled =
-      (field === 'groupSize' ? value : formData?.groupSize) && (
-      field === 'accommodation' ? value : formData?.accommodation) && (
-      field === 'mealPlan' ? value : formData?.mealPlan);
-
-      if (allFieldsFilled) {
-        setCurrentStep(3);
-      }
-    }
   };
 
   const validateForm = () => {
@@ -227,6 +208,31 @@ const JourneyPlanner = () => {
     navigate('/enquiry-form', { state: { journeyData } });
   };
 
+  const handleNext = () => {
+    if (currentStep < steps.length - 1) {
+      setCurrentStep(currentStep + 1);
+    }
+  };
+
+  const handlePrev = () => {
+    if (currentStep > 0) {
+      setCurrentStep(currentStep - 1);
+    }
+  };
+
+  const canProceed = () => {
+    switch (currentStep) {
+      case 0:
+        return selectedPackage !== null;
+      case 1:
+        return startDate !== null;
+      case 2:
+        return formData.groupSize && formData.accommodation && formData.mealPlan;
+      default:
+        return true;
+    }
+  };
+
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
@@ -248,24 +254,19 @@ const JourneyPlanner = () => {
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto container-padding py-8 md:py-12 lg:py-16">
+        <div className="max-w-4xl mx-auto container-padding py-8 md:py-12 lg:py-16">
           <ProgressIndicator currentStep={currentStep} steps={steps} />
 
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
-            <div className="lg:col-span-2 space-y-8 md:space-y-12">
-              <section id="package-section">
-                <div className="flex items-center space-x-3 mb-6">
-                  <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                    <Icon name="Package" size={24} color="var(--color-primary)" />
-                  </div>
-                  <div>
-                    <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline">
-                      Step 1: Select Your Package
-                    </h2>
-                    <p className="text-sm md:text-base text-muted-foreground">Choose from our curated tour packages</p>
-                  </div>
+          <div className="mt-8">
+            {/* Step 1: Package Selection */}
+            {currentStep === 0 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline mb-2">
+                    Select Your Package
+                  </h2>
+                  <p className="text-muted-foreground">Choose from our curated tour packages</p>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                   {packages?.map((pkg) =>
                   <PackageSelectionCard
@@ -275,106 +276,118 @@ const JourneyPlanner = () => {
                     onSelect={() => handlePackageSelect(pkg)} />
                   )}
                 </div>
-              </section>
-
-              {selectedPackage &&
-              <section id="date-section">
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon name="Calendar" size={24} color="var(--color-primary)" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline">
-                        Step 2: Choose Your Dates
-                      </h2>
-                      <p className="text-sm md:text-base text-muted-foreground">Select your start date</p>
-                    </div>
-                  </div>
-
-                  <DateSelectionCalendar
-                  selectedStartDate={startDate}
-                  selectedEndDate={null}
-                  onDateSelect={handleDateSelect}
-                  blockedDates={blockedDates}
-                  singleDateSelection={true} />
-
-                  {startDate &&
-                <div className="mt-4 p-4 bg-primary/10 rounded-lg flex items-start space-x-3">
-                      <Icon name="Info" size={20} color="var(--color-primary)" className="flex-shrink-0 mt-0.5" />
-                      <div className="text-sm text-foreground">
-                        <p>Start date: <strong>{startDate?.toLocaleDateString('en-GB')}</strong></p>
-                        {endDate && <p>End date: <strong>{endDate?.toLocaleDateString('en-GB')}</strong> (calculated based on package duration)</p>}
-                      </div>
-                    </div>
-                }
-                </section>
-              }
-
-              {selectedPackage && startDate &&
-              <section id="details-section">
-                  <div className="flex items-center space-x-3 mb-6">
-                    <div className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-primary/10 flex items-center justify-center">
-                      <Icon name="Users" size={24} color="var(--color-primary)" />
-                    </div>
-                    <div>
-                      <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline">
-                        Step 3: Customize Your Experience
-                      </h2>
-                      <p className="text-sm md:text-base text-muted-foreground">Tell us about your preferences</p>
-                    </div>
-                  </div>
-
-                  <TravelerDetailsForm
-                  formData={formData}
-                  onFormChange={handleFormChange}
-                  errors={errors} />
-
-                </section>
-              }
-            </div>
-
-            <div className="lg:col-span-1">
-              <JourneySummaryPanel
-                selectedPackage={selectedPackage}
-                startDate={startDate}
-                endDate={endDate}
-                formData={formData}
-                totalPrice={calculateTotalPrice()}
-                onProceedToEnquiry={handleProceedToEnquiry}
-                isSticky={true} />
-
-            </div>
-          </div>
-
-          <div className="mt-12 md:mt-16 bg-muted/50 rounded-lg p-6 md:p-8">
-            <div className="flex items-start space-x-4">
-              <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
-                <Icon name="Sparkles" size={24} color="var(--color-accent)" />
               </div>
-              <div className="space-y-3">
-                <h3 className="text-lg md:text-xl font-bold text-foreground text-headline">
-                  Why Plan With Nayek Tours?
-                </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-foreground">
-                  <div className="flex items-start space-x-2">
-                    <Icon name="Check" size={16} color="var(--color-accent)" className="flex-shrink-0 mt-0.5" />
-                    <span>Flexible customization options for every journey</span>
+            )}
+
+            {/* Step 2: Date Selection */}
+            {currentStep === 1 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline mb-2">
+                    Choose Your Dates
+                  </h2>
+                  <p className="text-muted-foreground">Select your start date</p>
+                </div>
+                <div className="flex justify-center">
+                  <DateSelectionCalendar
+                    selectedStartDate={startDate}
+                    selectedEndDate={null}
+                    onDateSelect={handleDateSelect}
+                    blockedDates={blockedDates}
+                    singleDateSelection={true} />
+                </div>
+                {startDate && (
+                  <div className="max-w-md mx-auto p-4 bg-primary/10 rounded-lg flex items-start space-x-3">
+                    <Icon name="Info" size={20} color="var(--color-primary)" className="flex-shrink-0 mt-0.5" />
+                    <div className="text-sm text-foreground">
+                      <p>Start date: <strong>{startDate?.toLocaleDateString('en-GB')}</strong></p>
+                      {endDate && <p>End date: <strong>{endDate?.toLocaleDateString('en-GB')}</strong> (calculated based on package duration)</p>}
+                    </div>
                   </div>
-                  <div className="flex items-start space-x-2">
-                    <Icon name="Check" size={16} color="var(--color-accent)" className="flex-shrink-0 mt-0.5" />
-                    <span>Real-time pricing with no hidden charges</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Icon name="Check" size={16} color="var(--color-accent)" className="flex-shrink-0 mt-0.5" />
-                    <span>Expert travel consultants for personalized guidance</span>
-                  </div>
-                  <div className="flex items-start space-x-2">
-                    <Icon name="Check" size={16} color="var(--color-accent)" className="flex-shrink-0 mt-0.5" />
-                    <span>24/7 support throughout your journey</span>
-                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Step 3: Traveler Details */}
+            {currentStep === 2 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline mb-2">
+                    Customize Your Experience
+                  </h2>
+                  <p className="text-muted-foreground">Tell us about your preferences</p>
+                </div>
+                <div className="max-w-2xl mx-auto">
+                  <TravelerDetailsForm
+                    formData={formData}
+                    onFormChange={handleFormChange}
+                    errors={errors} />
                 </div>
               </div>
-            </div>
+            )}
+
+            {/* Step 4: Review */}
+            {currentStep === 3 && (
+              <div className="space-y-6">
+                <div className="text-center">
+                  <h2 className="text-2xl md:text-3xl font-bold text-foreground text-headline mb-2">
+                    Review Your Journey
+                  </h2>
+                  <p className="text-muted-foreground">Confirm your details and proceed to booking</p>
+                </div>
+                <div className="max-w-2xl mx-auto">
+                  <JourneySummaryPanel
+                    selectedPackage={selectedPackage}
+                    startDate={startDate}
+                    endDate={endDate}
+                    formData={formData}
+                    totalPrice={calculateTotalPrice()}
+                    onProceedToEnquiry={handleProceedToEnquiry}
+                    isSticky={false} />
+                </div>
+              </div>
+            )}
+          </div>
+
+          {/* Navigation Buttons */}
+          <div className="flex justify-between items-center mt-8">
+            <button
+              onClick={handlePrev}
+              disabled={currentStep === 0}
+              className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                currentStep === 0 
+                  ? 'bg-muted text-muted-foreground cursor-not-allowed' 
+                  : 'bg-secondary text-secondary-foreground hover:bg-secondary/80'
+              }`}
+            >
+              Previous
+            </button>
+
+            {currentStep < steps.length - 1 ? (
+              <button
+                onClick={handleNext}
+                disabled={!canProceed()}
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                  canProceed()
+                    ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+                    : 'bg-muted text-muted-foreground cursor-not-allowed'
+                }`}
+              >
+                Next
+              </button>
+            ) : (
+              <button
+                onClick={handleProceedToEnquiry}
+                disabled={!canProceed()}
+                className={`px-6 py-3 rounded-lg font-medium transition-all duration-200 ${
+                  canProceed()
+                    ? 'bg-accent text-accent-foreground hover:bg-accent/90'
+                    : 'bg-muted text-muted-foreground cursor-not-allowed'
+                }`}
+              >
+                Proceed to Enquiry
+              </button>
+            )}
           </div>
         </div>
       </main>

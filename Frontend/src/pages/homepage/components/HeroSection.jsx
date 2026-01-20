@@ -126,7 +126,7 @@ const HeroSection = () => {
 
         <Icon name="ChevronRight" size={16} md:size={24} color="#FFFFFF" />
       </button>
-      <div className="absolute bottom-6 md:bottom-8 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2">
+      <div className="absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 z-30 flex items-center space-x-2">
         {heroSlides?.map((_, index) =>
         <button
           key={index}
