@@ -30,12 +30,7 @@ export default defineConfig({
   },
   plugins: [
     tsconfigPaths(), 
-    react({
-      jsxImportSource: "@emotion/react",
-      babel: {
-        plugins: ["@emotion/babel-plugin"]
-      }
-    }), 
+    react(), 
     tagger()
   ],
   server: {
