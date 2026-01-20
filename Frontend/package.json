@@ -54,12 +54,19 @@
     "tailwind-merge": "^3.3.1",
     "tailwindcss-animate": "^1.0.7",
     "tailwindcss-elevation": "^2.0.0",
-    "tailwindcss-fluid-type": "^2.0.7"
+    "tailwindcss-fluid-type": "^2.0.7",
+    "web-vitals": "^3.5.0",
+    "vite-bundle-analyzer": "^0.7.0",
+    "workbox-webpack-plugin": "^7.0.0"
   },
   "scripts": {
     "start": "vite",
-    "build": "vite build --sourcemap",
-    "serve": "vite preview"
+    "build": "vite build",
+    "build:analyze": "vite build && npx vite-bundle-analyzer dist",
+    "preview": "vite preview",
+    "serve": "vite preview",
+    "lighthouse": "lhci autorun",
+    "perf": "npm run build && npm run lighthouse"
   },
   "eslintConfig": {
     "extends": [
