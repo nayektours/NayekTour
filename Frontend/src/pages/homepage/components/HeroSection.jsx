@@ -12,29 +12,28 @@ const HeroSection = () => {
   const heroSlides = [
   {
     id: 1,
-    image: "https://images.unsplash.com/photo-1683289934315-96efac98c0bb",
+    image: "https://images.unsplash.com/photo-1683289934315-96efac98c0bb?w=1920&q=80&fm=webp",
     alt: "Majestic Taj Mahal monument with white marble domes and minarets reflecting in water pool during golden sunset hour in Agra India",
     title: "Discover India, Your Way",
-    subtitle: "Experience the soul of incredible India through curated cultural journeys",
+    subtitle: "Experience soul of incredible India through curated cultural journeys",
     cta: "Explore Destinations"
   },
   {
     id: 2,
-    image: "https://images.unsplash.com/photo-1683650101012-ca75b3269975",
+    image: "https://images.unsplash.com/photo-1683650101012-ca75b3269975?w=1920&q=80&fm=webp",
     alt: "Traditional wooden houseboat floating on serene Kerala backwaters surrounded by lush green palm trees and tropical vegetation under clear blue sky",
     title: "Kerala Backwaters Await",
-    subtitle: "Sail through tranquil waters and experience God\'s Own Country",
+    subtitle: "Sail through tranquil waters and experience God's Own Country",
     cta: "View Packages"
   },
   {
     id: 3,
-    image: "https://images.unsplash.com/photo-1716094173739-8cc64d934910",
+    image: "https://images.unsplash.com/photo-1716094173739-8cc64d934910?w=1920&q=80&fm=webp",
     alt: "Ancient Rajasthani palace architecture with ornate carved sandstone walls and traditional jharokha windows against vibrant blue sky in Jaipur",
     title: "Royal Rajasthan Heritage",
-    subtitle: "Walk through centuries of history in the land of kings",
+    subtitle: "Walk through centuries of history in land of kings",
     cta: "Plan Journey"
   }];
-
 
   useEffect(() => {
     if (!isAutoPlaying) return;
@@ -83,10 +82,13 @@ const HeroSection = () => {
 
           <div className="absolute inset-0">
             <Image
-            src={slide?.image}
-            alt={slide?.alt}
-            className="w-full h-full object-cover" />
-
+              src={slide?.image}
+              alt={slide?.alt}
+              loading="eager"
+              decoding="async"
+              className="w-full h-full object-cover"
+              sizes="(max-width: 1920px) 100vw, 1920px"
+            />
             <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/30 to-black/60" />
           </div>
 

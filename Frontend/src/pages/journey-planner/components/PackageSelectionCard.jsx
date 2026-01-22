@@ -16,6 +16,8 @@ const PackageSelectionCard = ({ packageData, isSelected, onSelect }) => {
         <Image
           src={packageData?.image}
           alt={packageData?.imageAlt}
+          loading="lazy"
+          sizes="(max-width: 768px) 100vw, 768px"
           className="w-full h-full object-cover"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
